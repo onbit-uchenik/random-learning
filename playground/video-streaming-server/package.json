@@ -4,7 +4,8 @@
   "description": "Server to stream video",
   "main": "index.js",
   "scripts": {
-    "test-lint": "npx eslint --ext .js --ignore-path .gitignore ."
+    "test-lint": "npx eslint --ext .js --ignore-path .gitignore .",
+    "start": "node index.js"
   },
   "author": "Anubhav Vats",
   "license": "ISC",
