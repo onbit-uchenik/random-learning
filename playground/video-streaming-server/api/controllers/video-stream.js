@@ -44,9 +44,9 @@ module.exports = {
                     .map((value) => parseInt(value, 10));
 
                 if (!end) {
-                    end = Math.min(start + CHUNK, videoSize);
+                    end = Math.min(start + CHUNK, videoSize - 1);
                 } else {
-                    end = MATH.min(end, videoSize);
+                    end = MATH.min(end, videoSize - 1);
                 }
 
                 reply.raw.writeHead(206, {
