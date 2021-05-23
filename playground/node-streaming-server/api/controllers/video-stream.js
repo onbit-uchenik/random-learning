@@ -6,7 +6,7 @@ const fs = require('fs'),
     path = require('path'),
 
     videoDir = path.join(__dirname, '../../static/videos'),
-    CHUNK = 1000000; // 1 MB
+    MAX_CHUNK_SIZE = 500000; // 500 KB
 
 module.exports = {
     schema: {
@@ -27,7 +27,7 @@ module.exports = {
      * @param {Object} reply  - Fastify object for outgoing response
      */
     handler (req, reply) {
-        const videoRange = req.headers.range,
+        const requestRange = req.headers.range,
             { videoName } = req.params,
             videoPath = path.join(videoDir, `/${videoName}`);
 
@@ -38,15 +38,16 @@ module.exports = {
             })
             .then(function (videoSize) {
                 // eslint-disable-next-line no-unused-vars
-                const [type, range] = videoRange.split('=');
+                const [type, range] = requestRange.split('=');
 
                 let [start, end] = range.split('-')
                     .map((value) => parseInt(value, 10));
 
                 if (!end) {
-                    end = Math.min(start + CHUNK, videoSize - 1);
+                    end = Math.min(start + MAX_CHUNK_SIZE, videoSize - 1);
                 } else {
-                    end = MATH.min(end, videoSize - 1);
+                    end = MATH.min(Math.min(end, start 
+                        + MAX_CHUNK_SIZE),  videoSize - 1);
                 }
 
                 reply.raw.writeHead(206, {

@@ -1,11 +1,14 @@
 'use strict';
 
-const fastify = require('fastify')({
-        logger: true
+const  path = require('path'),
+    fastify = require('fastify')({
+        logger: {
+            level: 'info',
+            file: path.join(__dirname, '/.log/out.log')
+        }
     }),
     routes = require('./api/routes/routes'),
     fastifyStatic = require('fastify-static'),
-    path = require('path'),
 
     PORT = 3658;
 
@@ -15,7 +18,7 @@ fastify.register(fastifyStatic, {
 
 fastify.register(routes);
 
-fastify.listen(PORT, function onListen (err) {
+fastify.listen(PORT, '0.0.0.0', function onListen (err) {
     if (err) {
         fastify.log.error(err);
     }
