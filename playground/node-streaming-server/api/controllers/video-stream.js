@@ -52,7 +52,7 @@ module.exports = {
                 'Content-Type': 'video/mp4'
             });
                 
-            const videoStream = fs.createReadStream(videoPath, { start, end });
+            const videoStream = fs.createReadStream(videoPath, { start, end, highWaterMark: 1024 * 1024 });
 
             videoStream.pipe(reply.raw);
     }
